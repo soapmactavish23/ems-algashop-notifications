@@ -43,4 +43,10 @@ class EmailTemplateHtmlValidatorImplTest {
                 .isThrownBy(() -> validator.validateSyntax("<a href=\"javascript:alert(1)\">link</a>"));
     }
 
+    @Test
+    void givenHtmlWithValidHref_whenValidateSyntax_shouldThrowInvalidTemplateException() {
+        Assertions.assertThatCode(() -> validator.validateSyntax("<a href=\"https://algashop.com\">link</a>"))
+                .doesNotThrowAnyException();
+    }
+
 }
