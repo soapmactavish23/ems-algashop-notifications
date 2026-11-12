@@ -4,48 +4,48 @@ import com.algaworks.algashop.notifications.application.email.InvalidTemplateHtm
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class EmailTemplateHtmlValidatorImplTest {
+class EmailTemplateHtmlValidatorJsoupImplTest {
 
-    private final EmailTemplateHtmlValidatorImpl validator = new EmailTemplateHtmlValidatorImpl();
+    private final EmailTemplateHtmlValidatorJsoupImpl validator = new EmailTemplateHtmlValidatorJsoupImpl();
 
     @Test
     void givenWellFormedHTML_whenValidateSyntax_shouldNotThrowErrors() {
-        Assertions.assertThatCode(() -> validator.validateSyntax("<p>Hello</p>")).doesNotThrowAnyException();
+        Assertions.assertThatCode(()-> validator.validateSyntax("<p>Hello</p>")).doesNotThrowAnyException();
     }
 
     @Test
     void givenMalformedHTML_whenValidateSyntax_shouldThrowInvalidTemplateException() {
         Assertions.assertThatExceptionOfType(InvalidTemplateHtmlException.class)
-                .isThrownBy(() -> validator.validateSyntax("</div><p>Hello</p></div>"));
+                .isThrownBy(()-> validator.validateSyntax("</div><p>Hello</div>"));
     }
 
     @Test
     void givenHtmlWithScriptTag_whenValidateSyntax_shouldThrowInvalidTemplateException() {
         Assertions.assertThatExceptionOfType(InvalidTemplateHtmlException.class)
-                .isThrownBy(() -> validator.validateSyntax("<p>Hello</p><script>console.log('hi')/script"));
+                .isThrownBy(()-> validator.validateSyntax("<p>Hello</p><script>console.log('hi')</script>"));
     }
 
     @Test
     void givenHtmlWithInlineEventHandler_whenValidateSyntax_shouldThrowInvalidTemplateException() {
         Assertions.assertThatExceptionOfType(InvalidTemplateHtmlException.class)
-                .isThrownBy(() -> validator.validateSyntax("<p onclick=\"alert(1)\">Hello</p>"));
+                .isThrownBy(()-> validator.validateSyntax("<p onclick=\"alert(1)\">Hello</p>"));
     }
 
     @Test
-    void givenHtmlWithThymeleafAttribute_whenValidateSyntax_shouldThrowInvalidTemplateException() {
-        Assertions.assertThatCode(() -> validator.validateSyntax("<p th:text=\"${recipient.name}\">Alex</p>"))
+    void givenHtmlWithThymeleafAttribute_whenValidateSyntax_shouldNotThrowErrors() {
+        Assertions.assertThatCode(()-> validator.validateSyntax("<p th:text=\"${recipient.name}\">Alex</p>"))
                 .doesNotThrowAnyException();
     }
 
     @Test
     void givenHtmlWithJavascriptUrl_whenValidateSyntax_shouldThrowInvalidTemplateException() {
         Assertions.assertThatExceptionOfType(InvalidTemplateHtmlException.class)
-                .isThrownBy(() -> validator.validateSyntax("<a href=\"javascript:alert(1)\">link</a>"));
+                .isThrownBy(()-> validator.validateSyntax("<a href=\"javascript:alert(1)\">link</a>"));
     }
 
     @Test
-    void givenHtmlWithValidHref_whenValidateSyntax_shouldThrowInvalidTemplateException() {
-        Assertions.assertThatCode(() -> validator.validateSyntax("<a href=\"https://algashop.com\">link</a>"))
+    void givenHtmlWithValidHref_whenValidateSyntax_shouldNotThrowErrors() {
+        Assertions.assertThatCode(()-> validator.validateSyntax("<a href=\"https://algashop.com\">Link</a>"))
                 .doesNotThrowAnyException();
     }
 

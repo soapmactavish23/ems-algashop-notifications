@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class EmailTemplateHtmlValidatorImpl implements EmailTemplateHtmlValidator {
+public class EmailTemplateHtmlValidatorJsoupImpl implements EmailTemplateHtmlValidator {
 
 	private static final int MAX_VIOLATIONS = 10;
 	private static final Set<String> FORBIDDEN_TAGS = Set.of("script", "iframe", "object", "embed");
