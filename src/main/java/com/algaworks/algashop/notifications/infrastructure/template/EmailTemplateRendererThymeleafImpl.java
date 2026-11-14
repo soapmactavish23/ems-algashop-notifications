@@ -13,6 +13,7 @@ import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Component
 public class EmailTemplateRendererThymeleafImpl implements EmailTemplateRenderer {
@@ -46,8 +47,8 @@ public class EmailTemplateRendererThymeleafImpl implements EmailTemplateRenderer
 	}
 
 	private String process(Map<String, Object> variables,
-						   TemplateEngine engine,
-						   String subjectTemplate) {
+	                       TemplateEngine engine,
+	                       String subjectTemplate) {
 		try {
 			Context context = new Context(LOCALE, variables);
 			return engine.process(subjectTemplate, context);

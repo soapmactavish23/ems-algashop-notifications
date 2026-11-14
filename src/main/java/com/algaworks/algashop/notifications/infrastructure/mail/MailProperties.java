@@ -6,13 +6,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-@Data
 @Component
 @Validated
+@Data
 @ConfigurationProperties("algashop.notifications.mail")
 public class MailProperties {
 
-    @NotBlank
-    private String from;
-
+	@NotBlank
+	private String from;
 }
